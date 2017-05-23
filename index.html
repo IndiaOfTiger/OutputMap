@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Where is the Dog?</title>
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyAk9nRbh3Dae3-36PE9N7td026V6_NK02A" type="text/javascript"></script>
+    <link rel='stylesheet' type='text/css' href="css/style.css">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css">
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/csmapi.js"></script>
+    <script src="js/dan.js"></script>
+    <script src="js/dai.js"></script>
+    <script src="js/dai-app.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/css/map-icons.css">
+    <script type="text/javascript" src="dist/js/map-icons.js"></script>
+ </head>
+  <body>
+   
+   <div id="Location-map"></div>
+   <!--
+   <ul class="showVideo">
+    <li class="chosen" id="Close">Close</li>
+    <li id="Previous">Previous</li>
+    <li id="Current">Current</li>
+   </ul>   
+   !-->
+   <div id="videoBox">
+    <iframe id = "Video-Display" style="width:98%;height:98%" src="https://www.youtube.com/embed/hfJ5JEAccvo'" frameborder="0" allowfullscreen></iframe> <!-- fake video !-->
+    <div id="latLng">
+       <section id="lat">
+         <img src="image/marker.png" style="width:60px;height:80px">
+         <ul class="showMarkerInfo">
+          <li id="Position">Position: </li>
+          <section id="PosSec">
+            <span></span>
+          </section>
+          <!--<li id="ID">ID: </li>
+          <section id="IDsec">
+            <span></span>
+          </section>!-->
+          <li id="Time">Time: </li>
+          <section id="TimeSec">
+            <span></span>
+          </section>
+         </ul>
+         <span></span>
+       </section>
+    </div> 
+   </div>
+   <div id="latLng2">
+       <section id="lat2">
+         <img src="image/marker.png" style="width:60px;height:80px">
+         <ul class="showMarkerInfo">
+          <li id="Position2">Position: </li>
+          <section id="PosSec2">
+            <span></span>
+          </section>
+          <!--<li id="ID">ID: </li>
+          <section id="IDsec">
+            <span></span>
+          </section>!-->
+          <li id="Frequency">Frequency: </li>
+          <section id="FreqSec">
+            <span></span>
+          </section>
+         </ul>
+         <span></span>
+       </section>
+    </div> 
+  </body>
+<html>
