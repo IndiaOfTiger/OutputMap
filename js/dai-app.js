@@ -14,7 +14,7 @@ $(function(){
     
         var videoDom = $('#videoBox > span');
         var map;
-        var polyLines = [];
+        
         function initialize() {
 
           // Create an array of styles.
@@ -375,19 +375,19 @@ $(function(){
            ThisLastLng = generate_latLng(lat,lng);
            receiveTime = data[0].Time;
            var latandlng = "(" + lat + "," + lng + ")";
-           if(id == "2")
+           if(id == "20" || id == "21")
            {
               posDom2.text(latandlng);
-              freqDom.text(receiveTime);
+              //freqDom.text(receiveTime);
            }
            else
            {
               posDom.text(latandlng);
               idDom.text(id);
-              timeDom.text(receiveTime); 
+              //timeDom.text(receiveTime); 
            }
            description = id + ': ' + receiveTime;
-           if(id == "0" || id == "2" && getDistance(LastLatLng,ThisLastLng) > 1)
+           if(id == "00" || id == "01" || id == "20" || id == "21" && getDistance(LastLatLng,ThisLastLng) > 1)
            {
                addMarker(lat, lng, id);
                LastLatLng = generate_latLng(lat,lng);
@@ -396,15 +396,17 @@ $(function(){
         
 
         var polyCoordinates = [];
+        var polyLines = [[],[]];
         var lineColor;
         var linR, linG, linB;
         
-        function removeLine() {
+        /*function removeLine() {
           for(var i = 0; i < polyLines.length; i++){
             polyLines[i].setMap(null);
           }
-        }
-        function addPolyLine(counterID, markerArr, r, g, b){            
+        }*/
+        function addPolyLine(ID, counterID, markerArr, r, g, b){         
+
             var max = markerArr.length - 1;
             console.log("Max: ", max);
             console.log("CounterID: ", counterID);
@@ -426,22 +428,22 @@ $(function(){
                   strokeOpacity: 1,
                   strokeWeight: 2
                 });
-              polyLines.push(markersLine);
+              polyLines[ID].push(markersLine);
               
-              if(polyLines.length > 10)
+              if(polyLines[ID].length > 10)
               {
                   var temp = [];
-                  for(var j=1;j<polyLines.length;j++)
+                  for(var j=1;j<polyLines[ID].length;j++)
                   {
-                      temp.push(polyLines[j]);
+                      temp.push(polyLines[ID][j]);
                   }
-                  polyLines[0].setMap(null);
-                  polyLines = temp;
-                  polyLines[polyLines.length-1].setMap(map);
+                  polyLines[ID][0].setMap(null);
+                  polyLines[ID] = temp;
+                  polyLines[ID][polyLines[ID].length-1].setMap(map);
                   continue;
               }
 
-              polyLines[polyLines.length-1].setMap(map);
+              polyLines[ID][polyLines[ID].length-1].setMap(map);
               break;              
             }
         }
@@ -466,9 +468,9 @@ $(function(){
         var counterIDs = [0, 0]
         function addMarker(lat, lng, id)
         { 
-            if(id == "0")
+            if(id == "00" || id == "01")
               changepinImage(89,193,84);
-            else if (id == "2")
+            else if (id == "20" || id == "21")
               changepinImage(39,99,157);
 
             var infowindow = new google.maps.InfoWindow({
@@ -485,21 +487,22 @@ $(function(){
                                infowindow.open(map, marker);
                                });
             //infowindow.open(map,marker);
-            if(id == "0")
-              markerMotion(markersID1, 0, marker, lat, lng, 89, 193, 84);
-            else if (id == "2")
-              markerMotion(markersID2, 1, marker, lat, lng, 39, 99, 157);
+            if(id == "00" || id == "01")
+              markerMotion(id, markersID1, 0, marker, lat, lng, 89, 193, 84);
+            else if (id == "20" || id == "21")
+              markerMotion(id, markersID2, 1, marker, lat, lng, 39, 99, 157);
         }
         
 
-        function markerMotion(markersID, counterID, marker, lat, lng, r, g, b)
+        function markerMotion(id, markersID, counterID, marker, lat, lng, r, g, b)
         {
           clearMarkers(markersID, counterIDs[counterID]%10);
           counterIDs[counterID] = counterIDs[counterID] % 10;
           markersID[counterIDs[counterID]] = marker;
-          addPolyLine(counterIDs[counterID], markersID, r, g, b);
+          if(id == "01" || id == "21")
+            addPolyLine(counterID, counterIDs[counterID], markersID, r, g, b);
           counterIDs[counterID]++;
-          console.log(markersID[counterIDs[counterID]-1].position.lat());
+          //console.log(markersID[counterIDs[counterID]-1].position.lat());
           console.log(lat);
           displayVideo(lat, lng);
 
@@ -703,7 +706,6 @@ $(function(){
        
         
 });
-
 
 
 
