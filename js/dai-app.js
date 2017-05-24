@@ -14,7 +14,7 @@ $(function(){
     
         var videoDom = $('#videoBox > span');
         var map;
-        var polyLines = [];
+        
         function initialize() {
 
           // Create an array of styles.
@@ -396,15 +396,16 @@ $(function(){
         
 
         var polyCoordinates = [];
+        var polyLines = [[],[]];
         var lineColor;
         var linR, linG, linB;
         
-        function removeLine() {
+        /*function removeLine() {
           for(var i = 0; i < polyLines.length; i++){
             polyLines[i].setMap(null);
           }
-        }
-        function addPolyLine(counterID, markerArr, r, g, b){            
+        }*/
+        function addPolyLine(ID, counterID, markerArr, r, g, b){            
             var max = markerArr.length - 1;
             console.log("Max: ", max);
             console.log("CounterID: ", counterID);
@@ -426,22 +427,22 @@ $(function(){
                   strokeOpacity: 1,
                   strokeWeight: 2
                 });
-              polyLines.push(markersLine);
+              polyLines[ID].push(markersLine);
               
-              if(polyLines.length > 10)
+              if(polyLines[ID].length > 10)
               {
                   var temp = [];
-                  for(var j=1;j<polyLines.length;j++)
+                  for(var j=1;j<polyLines[ID].length;j++)
                   {
-                      temp.push(polyLines[j]);
+                      temp.push(polyLines[ID][j]);
                   }
-                  polyLines[0].setMap(null);
-                  polyLines = temp;
-                  polyLines[polyLines.length-1].setMap(map);
+                  polyLines[ID][0].setMap(null);
+                  polyLines[ID] = temp;
+                  polyLines[ID][polyLines[ID].length-1].setMap(map);
                   continue;
               }
 
-              polyLines[polyLines.length-1].setMap(map);
+              polyLines[ID][polyLines[ID].length-1].setMap(map);
               break;              
             }
         }
@@ -497,7 +498,7 @@ $(function(){
           clearMarkers(markersID, counterIDs[counterID]%10);
           counterIDs[counterID] = counterIDs[counterID] % 10;
           markersID[counterIDs[counterID]] = marker;
-          addPolyLine(counterIDs[counterID], markersID, r, g, b);
+          addPolyLine(counterID, counterIDs[counterID], markersID, r, g, b);
           counterIDs[counterID]++;
           console.log(markersID[counterIDs[counterID]-1].position.lat());
           console.log(lat);
